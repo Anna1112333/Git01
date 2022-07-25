@@ -1,47 +1,47 @@
 ﻿#include <iostream>
 #include <fstream>
 using namespace std;
-
+void recording(int* mas, int size, ofstream& recording_in_file)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        recording_in_file <<mas[i] << " ";
+    }
+}
+void reading(int* mas, int size, ifstream& reading_file)
+{
+    for (int i = 0; i < size; i++)
+    {
+        reading_file >> mas[i];
+        cout << mas[i];
+    }
+    cout << "\n";
+}
 int main()
 {
+    setlocale(LC_ALL, "Russian"); // На русский
     int number1, number2;
-    ifstream m("in.txt");
-    if(!m.is_open())
+    ifstream reading_file("in.txt");
+    if(!reading_file.is_open())
     {
-        cout << "Файл не открывается"; return 0;
+        cout << "Файл не открывается"; return 1;
     }
-    m >> number1;
-    number1;
-    int* ms1 = static_cast<int*>(malloc(number1 * sizeof(int)));
-    for(int i=0; i<number1; ++i)
-    {
-        m >> ms1[i];
-        cout << ms1[i];
-    }
-    cout << "\n";
-    m >> number2;
-    number2;
-    int* ms2 = static_cast<int*>(malloc(number2 * sizeof(int)));
-    for (int i = 0; i < number2; ++i)
-    {
-        m >> ms2[i];
-        cout << ms2[i];
-    }
-    cout << "\n";
-    ofstream j("out.txt");
-        j << number2<<endl<<ms2[number2-1]<<" ";
-        for(int i=0; i<number2-1; i++)
-        {
-            j << ms2[i] << " ";
-        }
-        
-        j <<endl<< number1 << endl << ms1[number1 - 1]<<" ";
-        for (int i = 0; i < number1 - 1; ++i)
-        {
-            j << ms1[i] << " ";
-        }
-       
-    free(ms1);
-    free(ms2);
-    j.close();
+    reading_file >> number1;
+    int* ms1 = new int[number1];
+    reading(ms1, number1, reading_file);
+   
+    reading_file >> number2;
+    int* ms2 = new int[number2];
+    reading(ms2, number2, reading_file);
+
+    ofstream recording_in_file("out.txt");
+    recording_in_file << number2<<endl<<ms2[number2-1]<<" ";
+    recording(ms2, number2, recording_in_file);
+    recording_in_file <<endl<< number1 << endl << ms1[number1 - 1]<<" ";
+    recording(ms1, number1, recording_in_file);
+    
+    delete[] ms1;
+    delete[] ms2;
+    recording_in_file.close();
+    reading_file.close();
 }
