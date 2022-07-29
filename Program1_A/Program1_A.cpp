@@ -37,9 +37,9 @@ int main()
     ofstream recording_in_file("out.txt");
     recording_in_file << number2<<endl<<ms2[number2-1]<<" ";
     recording(ms2, number2, recording_in_file);
-    recording_in_file <<endl<< number1 << endl << ms1[number1 - 1]<<" ";
-    recording(ms1, number1, recording_in_file);
-    
+    recording_in_file << endl << number1 << endl; 
+    recording(ms1+1, number1, recording_in_file);
+    recording_in_file<< ms1[0] << endl;
     delete[] ms1;
     delete[] ms2;
     recording_in_file.close();
